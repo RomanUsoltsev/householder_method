@@ -42,17 +42,15 @@ def mainSVDTab(showplt=True):
         ansX4_ch = svf.getAnsSVD(U4_ch[:, :N + 1], S4_ch, V4_ch, Y4)
         ansX5_ch = svf.getAnsSVD(U5_ch[:, :N + 1], S5_ch, V5_ch, Y5)
 
-        # show SVD solve and standart
-        print("solve data3 [my] , [standart], |my - standatr| :\n", np.c_[ansX3, ansX3_ch, ansX3 - ansX3_ch])
-
-        print("solve data4 [my] - [standart], |my - standatr| :\n", np.c_[ansX4, ansX4_ch, ansX4 - ansX4_ch])
-
-        print("solve data5 [my] - [standart], |my - standatr| :\n", np.c_[ansX5, ansX5_ch, ansX5 - ansX5_ch])
-
         # get New Y data
         arrNewY3 = secf.getFunValueArr(X3, ansX3)
         arrNewY4 = secf.getFunValueArr(X4, ansX4)
         arrNewY5 = secf.getFunValueArr(X5, ansX5)
+
+        ansX3_ch = secf.getFunValueArr(X3, ansX3_ch)
+        ansX4_ch = secf.getFunValueArr(X4, ansX4_ch)
+        ansX5_ch = secf.getFunValueArr(X5, ansX5_ch)
+
 
         if (showplt):
             plt.figure(figsize=(35, 8), facecolor='white')
@@ -61,10 +59,10 @@ def mainSVDTab(showplt=True):
             secf.showData(1, 3, 1, X3, ansX3_ch, "orig", "N = " + str(N))
 
             secf.showData(1, 3, 2, X4, arrNewY4, "my", "N = " + str(N))
-            secf.showData(1, 3, 2, X4, ansX3_ch, "orig", "N = " + str(N))
+            secf.showData(1, 3, 2, X4, ansX4_ch, "orig", "N = " + str(N))
 
             secf.showData(1, 3, 3, X5, arrNewY5, "my", "N = " + str(N))
-            secf.showData(1, 3, 3, X5, ansX3_ch, "orig", "N = " + str(N))
+            secf.showData(1, 3, 3, X5, ansX5_ch, "orig", "N = " + str(N))
 
             plt.show()
 
@@ -72,3 +70,6 @@ def mainSVDTab(showplt=True):
         print("SME 3 :", secf.getSME(Y3, arrNewY3))
         print("SME 4 :", secf.getSME(Y4, arrNewY4))
         print("SME 5 :", secf.getSME(Y5, arrNewY5))
+
+if __name__ == "__main__":
+    mainSVDTab(showplt=True)
